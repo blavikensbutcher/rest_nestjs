@@ -15,21 +15,96 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String?
-  email     String    @unique
-  password  String
-  jwt       String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name     String?
+  email    String  @unique
+  password String
+
+  jwt String?
+
   comment   Comment[]
+  Task      Task[]
+  TimeBlock TimeBlock[]
+  Pomodoro  Pomodoro[]
+
+  @@map("user")
+}
+
+model Task {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  isCompleted Boolean   @default(false) @map("is_completed")
+  priority    Priority?
+  text        String
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @map("user_id")
+
+  @@map("task")
+}
+
+model TimeBlock {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name     String
+  color    String?
+  duration Int
+  order    Int     @default(1)
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @map("user_id")
+
+  @@map("time_block")
+}
+
+model Pomodoro {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  isCompleted Boolean @default(false) @map("is_completed")
+
+  user          User            @relation(fields: [userId], references: [id])
+  userId        Int             @map("user_id")
+  PomodoroRound PomodoroRound[]
+
+  @@map("pomodoro")
+}
+
+model PomodoroRound {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  isCompleted  Boolean @default(false) @map("is_completed")
+  totalSeconds Int     @map("total_seconds")
+
+  pomodoro   Pomodoro @relation(fields: [pomodoroId], references: [id], onDelete: Cascade)
+  pomodoroId Int      @map("pomodoro_id")
+
+  @@map("pomodoro_round")
 }
 
 model Comment {
   id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
   text      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   User      User     @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    Int      @map("user_id")
+
+  @@map("comment")
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
 }
