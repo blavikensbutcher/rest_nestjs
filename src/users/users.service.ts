@@ -14,12 +14,13 @@ export class UsersService {
     return this.dbService.user.findMany({});
   }
 
-  async findUserById(id: number) {
+  async findUserById(id: string) {
     return this.dbService.user.findUnique({
       where: {
         id,
       },
       include: {
+        task: true,
         comment: true,
       },
     });
@@ -36,7 +37,7 @@ export class UsersService {
     });
   }
 
-  async update(id: number, updateUserDto: Prisma.UserUpdateInput) {
+  async update(id: string, updateUserDto: Prisma.UserUpdateInput) {
     return this.dbService.user.update({
       where: {
         id,
@@ -48,7 +49,7 @@ export class UsersService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return this.dbService.user.delete({
       where: {
         id,

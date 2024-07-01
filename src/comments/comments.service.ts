@@ -13,7 +13,7 @@ export class CommentsService {
     return this.dbService.comment.findMany({});
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return this.dbService.comment.findUnique({
       where: {
         id,
@@ -21,7 +21,7 @@ export class CommentsService {
     });
   }
 
-  async update(id: number, updateCommentDto: Prisma.CommentUpdateInput) {
+  async update(id: string, updateCommentDto: Prisma.CommentUpdateInput) {
     return this.dbService.comment.update({
       where: {
         id,
@@ -30,7 +30,7 @@ export class CommentsService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return this.dbService.comment.delete({
       where: {
         id,

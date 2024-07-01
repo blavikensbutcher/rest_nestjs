@@ -28,7 +28,7 @@ export class CommentsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.commentsService.findOne(+id);
+    return this.commentsService.findOne(id);
   }
 
   @Patch(':id')
@@ -36,11 +36,11 @@ export class CommentsController {
     @Param('id') id: string,
     @Body() updateCommentDto: Prisma.CommentUpdateInput,
   ) {
-    return this.commentsService.update(+id, updateCommentDto);
+    return this.commentsService.update(id, updateCommentDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.commentsService.remove(+id);
+    return this.commentsService.remove(id);
   }
 }
