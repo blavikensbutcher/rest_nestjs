@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { DbModule } from './db/db.module';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './users/user.module';
 import { CommentsModule } from './comments/comments.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
@@ -9,7 +9,7 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     ConfigModule.forRoot(),
     DbModule,
-    UsersModule,
+    UserModule,
     CommentsModule,
     AuthModule,
   ],

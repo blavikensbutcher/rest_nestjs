@@ -7,14 +7,14 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UserService } from './user.service';
 import { Prisma } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
 @ApiTags('User')
-export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+export class UserController {
+  constructor(private readonly usersService: UserService) {}
 
   @Post()
   create(@Body() createUserDto: Prisma.UserCreateInput) {
