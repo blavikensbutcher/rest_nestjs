@@ -1,13 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { DbService } from '../db/db.service';
 import { Prisma } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
   constructor(private readonly dbService: DbService) {}
 
-  async create(createUserDto: Prisma.UserCreateInput) {
-    return this.dbService.user.create({ data: createUserDto });
+  async createUser(createUserDto: Prisma.UserCreateInput) {
+    const salt = await bcrypt.genSalt();
+    const user = {
+      name: createUserDto.name,
+      email: createUserDto.email,
+      password: await bcrypt.hash(createUserDto.password, salt),
+    };
+
+    return this.dbService.user.create({ data: user });
   }
 
   async findAll() {
@@ -20,6 +28,8 @@ export class UserService {
         id,
       },
       include: {
+        pomodoro: true,
+        timeBlock: true,
         task: true,
         comment: true,
       },
@@ -32,6 +42,9 @@ export class UserService {
         email,
       },
       include: {
+        pomodoro: true,
+        timeBlock: true,
+        task: true,
         comment: true,
       },
     });
@@ -43,9 +56,6 @@ export class UserService {
         id,
       },
       data: updateUserDto,
-      include: {
-        comment: true,
-      },
     });
   }
 
