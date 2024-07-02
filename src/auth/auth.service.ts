@@ -1,16 +1,115 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../users/user.service';
 import { AuthDto } from './dto/auth.dto';
+import * as bcrypt from 'bcrypt';
+import { Response } from 'express';
+import * as process from 'process';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly jwt: JwtService,
-    private readonly userService: UserService,
+    private jwt: JwtService,
+    private userService: UserService,
   ) {}
 
+  REFRESH_TOKEN_NAME = process.env.REFRESH_TOKEN_NAME;
+
   async login(dto: AuthDto) {
-    return dto;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...user } = await this.validateUser(dto);
+    const tokens = this.issueTokens(user.id);
+
+    await this.userService.update(user.id, {
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+    });
+
+    return user;
+  }
+  async register(dto: AuthDto) {
+    const isUserExists = await this.userService.findUserByEmail(dto.email);
+
+    if (isUserExists) throw new ConflictException('User already registered');
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...user } = await this.userService.createUser(dto); //Hide password and refresh token from response
+
+    const tokens = this.issueTokens(user.id);
+
+    user.accessToken = tokens.accessToken;
+    user.refreshToken = tokens.refreshToken;
+
+    return { user };
+  }
+
+  private issueTokens(userId: string) {
+    const data = { id: userId };
+
+    const accessToken = this.jwt.sign(data, { expiresIn: '1h' });
+    const refreshToken = this.jwt.sign(data, { expiresIn: '7d' });
+
+    return { accessToken, refreshToken };
+  }
+
+  private async validateUser(dto: AuthDto) {
+    const user = await this.userService.findUserByEmail(dto.email);
+
+    if (!user) throw new NotFoundException('User not found');
+
+    const isValid = await bcrypt.compare(dto.password, user.password);
+
+    if (!isValid) throw new UnauthorizedException('User or password is wrong');
+
+    return user;
+  }
+
+  addRefreshToken(res: Response, refreshToken: string) {
+    const expiresIn = new Date();
+    expiresIn.setDate(
+      expiresIn.getDate() + +process.env.EXPIRES_IN_REFRESH_TOKEN,
+    );
+
+    res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
+      httpOnly: true,
+      domain: 'localhost',
+      expires: expiresIn,
+      secure: true,
+      // lax in prod
+      sameSite: 'none',
+    });
+  }
+
+  removeRefreshToken(res: Response) {
+    res.cookie(this.REFRESH_TOKEN_NAME, '', {
+      httpOnly: true,
+      domain: 'localhost',
+      expires: new Date(0),
+      secure: true,
+      // lax in prod
+      sameSite: 'none',
+    });
+  }
+
+  async getNewTokens(refreshToken: string) {
+    const result = await this.jwt.verifyAsync(refreshToken);
+    if (!result) throw new UnauthorizedException('Invalid refresh token');
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...user } = await this.userService.findUserById(
+      result.id,
+    );
+
+    const tokens = this.issueTokens(user.id);
+
+    user.accessToken = tokens.accessToken;
+    user.refreshToken = tokens.refreshToken;
+
+    return { user };
   }
 }
