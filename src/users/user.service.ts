@@ -51,11 +51,19 @@ export class UserService {
   }
 
   async update(id: string, updateUserDto: Prisma.UserUpdateInput) {
+    const data = updateUserDto;
+
+    if (data.password) {
+      const salt = await bcrypt.genSalt(10);
+      const passwordNormalize = String(data.password);
+      data.password = await bcrypt.hash(passwordNormalize, salt);
+    }
+
     return this.dbService.user.update({
       where: {
         id,
       },
-      data: updateUserDto,
+      data,
     });
   }
 
