@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DbService } from '../db/db.service';
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { startOfDay, subDays } from 'date-fns';
 
 @Injectable()
 export class UserService {
@@ -50,7 +51,7 @@ export class UserService {
     });
   }
 
-  async update(id: string, updateUserDto: Prisma.UserUpdateInput) {
+  async updateUser(id: string, updateUserDto: Prisma.UserUpdateInput) {
     const data = updateUserDto;
 
     if (data.password) {
@@ -65,6 +66,52 @@ export class UserService {
       },
       data,
     });
+  }
+
+  async getUserProfile(id: string) {
+    const profile = await this.findUserById(id);
+
+    const totalTasks = profile.task.length;
+    const completedTasks = this.dbService.task.count({
+      where: {
+        userId: id,
+        isCompleted: true,
+      },
+    });
+
+    const currentDay = startOfDay(new Date());
+    const currentWeek = startOfDay(subDays(new Date(), 7));
+
+    const todayTasks = await this.dbService.task.count({
+      where: {
+        userId: id,
+        createdAt: {
+          gte: currentDay.toISOString(),
+        },
+      },
+    });
+
+    const weekTasks = await this.dbService.task.count({
+      where: {
+        userId: id,
+        createdAt: {
+          gte: currentWeek.toISOString(),
+        },
+      },
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...rest } = profile;
+
+    return {
+      user: rest,
+      statistics: [
+        { label: 'Total', value: totalTasks },
+        { label: 'Completed tasks', value: completedTasks },
+        { label: 'Today tasks', value: todayTasks },
+        { label: 'Week tasks', value: weekTasks },
+      ],
+    };
   }
 
   async remove(id: string) {

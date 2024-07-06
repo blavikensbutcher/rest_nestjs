@@ -1,46 +1,46 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Prisma } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
+import { Auth } from '../auth/decorators/auth.decorator';
 
 @Controller('users')
 @ApiTags('User')
 export class UserController {
-  constructor(private readonly usersService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
-  @Post()
-  create(@Body() createUserDto: Prisma.UserCreateInput) {
-    return this.usersService.createUser(createUserDto);
-  }
-
+  @Auth()
   @Get()
   findAll() {
-    return this.usersService.findAll();
+    return this.userService.findAll();
   }
 
+  @Auth()
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findUserById(id);
+    return this.userService.findUserById(id);
   }
 
+  @Auth()
   @Patch(':id')
   update(
     @Param('id') id: string,
     @Body() updateUserDto: Prisma.UserUpdateInput,
   ) {
-    return this.usersService.update(id, updateUserDto);
+    return this.userService.updateUser(id, updateUserDto);
   }
 
+  @Auth()
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
+    return this.userService.remove(id);
   }
 }

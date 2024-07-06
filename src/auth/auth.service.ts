@@ -25,7 +25,7 @@ export class AuthService {
     const { password, ...user } = await this.validateUser(dto);
     const tokens = this.issueTokens(user.id);
 
-    await this.userService.update(user.id, {
+    await this.userService.updateUser(user.id, {
       accessToken: tokens.accessToken,
       refreshToken: tokens.refreshToken,
     });
