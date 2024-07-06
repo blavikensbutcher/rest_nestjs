@@ -14,9 +14,10 @@ import { TasksService } from './tasks.service';
 import { TaskDto } from './dto/task.dto';
 import { Auth } from '../auth/decorators/auth.decorator';
 import { CurrentUser } from '../auth/decorators/user.decorator';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('/users/tasks')
+@ApiBearerAuth()
 @ApiTags('Tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
