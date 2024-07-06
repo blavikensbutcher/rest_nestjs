@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from '../users/user.service';
+import { UserService } from '../users/users.service';
 import { AuthDto } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
 import { Response } from 'express';
@@ -38,7 +38,7 @@ export class AuthService {
     if (isUserExists) throw new ConflictException('User already registered');
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...user } = await this.userService.createUser(dto); //Hide password and refresh token from response
+    const { password, ...user } = await this.userService.createUser(dto); //Hide password from response
 
     const tokens = this.issueTokens(user.id);
 

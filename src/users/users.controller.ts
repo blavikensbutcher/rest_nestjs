@@ -1,13 +1,5 @@
-import {
-  Controller,
-  Get,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
-} from '@nestjs/common';
-import { UserService } from './user.service';
+import { Controller, Get, Body, Patch, Param, Delete } from '@nestjs/common';
+import { UserService } from './users.service';
 import { Prisma } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
 import { Auth } from '../auth/decorators/auth.decorator';
@@ -24,13 +16,13 @@ export class UserController {
   }
 
   @Auth()
-  @Get(':id')
+  @Get('/u/:id')
   findOne(@Param('id') id: string) {
     return this.userService.findUserById(id);
   }
 
   @Auth()
-  @Patch(':id')
+  @Patch('/u/:id')
   update(
     @Param('id') id: string,
     @Body() updateUserDto: Prisma.UserUpdateInput,
@@ -39,7 +31,7 @@ export class UserController {
   }
 
   @Auth()
-  @Delete(':id')
+  @Delete('/u/:id')
   remove(@Param('id') id: string) {
     return this.userService.remove(id);
   }
