@@ -16,20 +16,15 @@ export class TasksService {
   }
 
   async createTask(dto: CreateTaskDto, userId: string) {
-    const data: Prisma.TaskCreateInput = {
-      text: dto.text || '',
-      isCompleted: dto.isCompleted ?? false,
-      createdAt: dto.createdAt ? new Date(dto.createdAt) : undefined,
-      priority: dto.priority,
-      user: {
-        connect: {
-          id: userId,
+    return this.dbService.task.create({
+      data: {
+        ...dto,
+        user: {
+          connect: {
+            id: userId,
+          },
         },
       },
-    };
-
-    return this.dbService.task.create({
-      data,
     });
   }
 

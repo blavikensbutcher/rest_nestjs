@@ -45,7 +45,7 @@ model Task {
 
   isCompleted Boolean   @default(false) @map("is_completed")
   priority    Priority?
-  text        String
+  text        String?
 
   user   User   @relation(fields: [userId], references: [id])
   userId String @map("user_id")
