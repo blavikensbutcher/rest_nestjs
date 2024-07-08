@@ -30,7 +30,7 @@ export class AuthService {
       refreshToken: tokens.refreshToken,
     });
 
-    return user;
+    return { ...user, accessToken: tokens.accessToken };
   }
   async register(dto: AuthDto) {
     const isUserExists = await this.userService.findUserByEmail(dto.email);
@@ -42,10 +42,11 @@ export class AuthService {
 
     const tokens = this.issueTokens(user.id);
 
-    user.accessToken = tokens.accessToken;
-    user.refreshToken = tokens.refreshToken;
-
-    return { user };
+    return {
+      ...user,
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+    };
   }
 
   private issueTokens(userId: string) {
@@ -107,9 +108,10 @@ export class AuthService {
 
     const tokens = this.issueTokens(user.id);
 
-    user.accessToken = tokens.accessToken;
-    user.refreshToken = tokens.refreshToken;
-
-    return { user };
+    return {
+      ...user,
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+    };
   }
 }

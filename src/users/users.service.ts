@@ -23,10 +23,10 @@ export class UserService {
     return this.dbService.user.findMany({});
   }
 
-  async findUserById(id: string) {
+  async findUserById(userId: string) {
     return this.dbService.user.findUnique({
       where: {
-        id,
+        id: userId,
       },
       include: {
         pomodoro: true,
@@ -51,7 +51,7 @@ export class UserService {
     });
   }
 
-  async updateUser(id: string, updateUserDto: Prisma.UserUpdateInput) {
+  async updateUser(userId: string, updateUserDto: Prisma.UserUpdateInput) {
     const data = updateUserDto;
 
     if (data.password) {
@@ -62,19 +62,19 @@ export class UserService {
 
     return this.dbService.user.update({
       where: {
-        id,
+        id: userId,
       },
       data,
     });
   }
 
-  async getUserProfile(id: string) {
-    const profile = await this.findUserById(id);
+  async getUserProfile(userId: string) {
+    const profile = await this.findUserById(userId);
 
     const totalTasks = profile.task.length;
     const completedTasks = this.dbService.task.count({
       where: {
-        userId: id,
+        userId,
         isCompleted: true,
       },
     });
@@ -84,7 +84,7 @@ export class UserService {
 
     const todayTasks = await this.dbService.task.count({
       where: {
-        userId: id,
+        userId,
         createdAt: {
           gte: currentDay.toISOString(),
         },
@@ -93,7 +93,7 @@ export class UserService {
 
     const weekTasks = await this.dbService.task.count({
       where: {
-        userId: id,
+        userId,
         createdAt: {
           gte: currentWeek.toISOString(),
         },
@@ -114,10 +114,10 @@ export class UserService {
     };
   }
 
-  async remove(id: string) {
+  async remove(userId: string) {
     return this.dbService.user.delete({
       where: {
-        id,
+        id: userId,
       },
     });
   }
