@@ -39,7 +39,7 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const response = await this.authService.register(dto);
-    const refreshToken = response.user.refreshToken;
+    const refreshToken = response.refreshToken;
 
     await this.authService.addRefreshToken(res, refreshToken);
 
@@ -69,7 +69,7 @@ export class AuthController {
 
     const response = await this.authService.getNewTokens(getRefreshToken);
 
-    this.authService.addRefreshToken(res, response.user.refreshToken);
+    this.authService.addRefreshToken(res, response.refreshToken);
 
     return response;
   }

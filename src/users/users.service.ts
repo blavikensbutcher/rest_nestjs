@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DbService } from '../db/db.service';
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
@@ -24,7 +24,7 @@ export class UserService {
   }
 
   async findUserById(userId: string) {
-    return this.dbService.user.findUnique({
+    const user = await this.dbService.user.findUnique({
       where: {
         id: userId,
       },
@@ -35,10 +35,14 @@ export class UserService {
         comment: true,
       },
     });
+
+    if (!user) throw new NotFoundException('User not found');
+
+    return user;
   }
 
   async findUserByEmail(email: string) {
-    return this.dbService.user.findUnique({
+    const user = await this.dbService.user.findUnique({
       where: {
         email,
       },
@@ -49,6 +53,10 @@ export class UserService {
         comment: true,
       },
     });
+
+    if (!user) throw new NotFoundException('User not found');
+
+    return user;
   }
 
   async updateUser(userId: string, updateUserDto: Prisma.UserUpdateInput) {
