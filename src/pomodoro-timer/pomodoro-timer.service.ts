@@ -41,7 +41,7 @@ export class PomodoroTimerService {
 
     return this.dbService.pomodoro.create({
       data: {
-        rounds: {
+        PomodoroRound: {
           createMany: {
             data: Array.from({ length: user.intervalCount }, () => ({
               totalSeconds: 0,

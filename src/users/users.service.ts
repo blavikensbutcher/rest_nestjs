@@ -33,9 +33,6 @@ export class UserService {
         timeBlock: true,
         task: true,
         comment: true,
-        intervalCount: true,
-        breakInterval: true,
-        workInterval: true,
       },
     });
 

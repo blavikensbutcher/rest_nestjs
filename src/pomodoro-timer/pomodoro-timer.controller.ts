@@ -54,8 +54,10 @@ export class PomodoroTimerController {
   @Auth()
   @HttpCode(200)
   @Delete(':id')
-  async deleteSession(@CurrentUser('id' userId: string, @Param('id') id:string){
-    return this.pomodoroTimerService.deleteSession(id, userId)
+  async deleteSession(
+    @CurrentUser('id') userId: string,
+    @Param('id') id: string,
+  ) {
+    return this.pomodoroTimerService.deleteSession(id, userId);
   }
 }
-

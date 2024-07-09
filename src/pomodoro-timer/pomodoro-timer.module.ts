@@ -4,8 +4,7 @@ import { PomodoroTimerController } from './pomodoro-timer.controller';
 import { UserService } from '../users/users.service';
 
 @Module({
-  imports: [UserService],
   controllers: [PomodoroTimerController],
-  providers: [PomodoroTimerService],
+  providers: [PomodoroTimerService, UserService],
 })
 export class PomodoroTimerModule {}
