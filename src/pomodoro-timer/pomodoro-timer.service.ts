@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DbService } from '../db/db.service';
 import { UserService } from '../users/users.service';
-import { PomodoroRoundDto } from './dto/pomodoroRound.dto';
+import { PomodoroRoundDto, PomodoroSessionDto } from './dto/pomodoroRound.dto';
 
 @Injectable()
 export class PomodoroTimerService {
@@ -23,7 +23,7 @@ export class PomodoroTimerService {
       include: {
         PomodoroRound: {
           orderBy: {
-            id: 'desc',
+            id: 'asc',
           },
         },
       },
@@ -61,7 +61,7 @@ export class PomodoroTimerService {
   }
 
   async update(
-    dto: Partial<PomodoroRoundDto>,
+    dto: Partial<PomodoroSessionDto>,
     pomodoroId: string,
     userId: string,
   ) {
@@ -74,7 +74,7 @@ export class PomodoroTimerService {
     });
   }
 
-  async updateRound(dto: Partial<PomodoroRoundDto>, roundId: string) {
+  async updateRound(dto: PomodoroRoundDto, roundId: string) {
     return this.dbService.pomodoroRound.update({
       where: {
         id: roundId,
