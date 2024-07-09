@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -39,15 +40,25 @@ export class TimeBlocksController {
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
-  @Patch('update-order')
+  @Put('update-order')
   @Auth()
   async updateOrder(@Body() updateBlocksDto: UpdateBlocksDto) {
     return this.timeBlockService.updateOrder(updateBlocksDto.ids);
   }
 
   @Auth()
+  @Patch(':id')
+  async update(
+    @Body() dto: TimeBlocksDto,
+    @CurrentUser('id') userId: string,
+    @Param('id') timeBlockId: string,
+  ) {
+    return this.timeBlockService.update(dto, timeBlockId, userId);
+  }
+
+  @Auth()
   @Delete(':id')
   async delete(@CurrentUser('id') userId: string, @Param('id') id: string) {
-    return this.timeBlockService.delete(id, userId);
+    return this.timeBlockService.delete(id);
   }
 }

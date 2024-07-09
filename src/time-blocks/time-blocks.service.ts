@@ -55,12 +55,17 @@ export class TimeBlocksService {
     });
   }
 
-  async delete(timeBlockId: string, userId: string) {
-    return this.dbService.task.delete({
-      where: {
-        id: timeBlockId,
-        userId,
-      },
+  async delete(timeBlockId: string) {
+    const timeBlock = await this.dbService.timeBlock.findUnique({
+      where: { id: timeBlockId },
+    });
+
+    if (!timeBlock) {
+      throw new Error(`Timeblock with this id does not exist.`);
+    }
+
+    return this.dbService.timeBlock.delete({
+      where: { id: timeBlockId },
     });
   }
 

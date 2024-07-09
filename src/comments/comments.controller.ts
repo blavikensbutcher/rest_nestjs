@@ -10,6 +10,7 @@ import {
 import { CommentsService } from './comments.service';
 import { Prisma } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
+import { Auth } from "../auth/decorators/auth.decorator";
 
 @Controller('comments')
 @ApiTags('Comment')
@@ -17,6 +18,7 @@ export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Post()
+  @Auth()
   create(@Body() createCommentDto: Prisma.CommentCreateInput) {
     return this.commentsService.create(createCommentDto);
   }
