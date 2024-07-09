@@ -14,7 +14,7 @@ import { CurrentUser } from '../auth/decorators/user.decorator';
 import { Auth } from '../auth/decorators/auth.decorator';
 import { PomodoroRoundDto } from './dto/pomodoroRound.dto';
 
-@Controller('user/pomodoro-timer')
+@Controller('users/pomodoro-timer')
 export class PomodoroTimerController {
   constructor(private readonly pomodoroTimerService: PomodoroTimerService) {}
 
