@@ -6,10 +6,6 @@ services:
       - "5432:5432"
     env_file:
       - .env
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "1234"
-      POSTGRES_DB: "prisma_orm"
     volumes:
       - db-data:/var/lib/postgresql/data
 
