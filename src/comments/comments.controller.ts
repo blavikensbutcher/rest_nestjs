@@ -10,7 +10,7 @@ import {
 import { CommentsService } from './comments.service';
 import { Prisma } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
-import { Auth } from "../auth/decorators/auth.decorator";
+import { Auth } from '../auth/decorators/auth.decorator';
 
 @Controller('comments')
 @ApiTags('Comment')

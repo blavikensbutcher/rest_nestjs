@@ -8,14 +8,17 @@ import {
   Patch,
   Post,
   UsePipes,
-  ValidationPipe
-} from "@nestjs/common";
+  ValidationPipe,
+} from '@nestjs/common';
 import { PomodoroTimerService } from './pomodoro-timer.service';
 import { CurrentUser } from '../auth/decorators/user.decorator';
 import { Auth } from '../auth/decorators/auth.decorator';
-import { PomodoroRoundDto, PomodoroSessionDto } from "./dto/pomodoroRound.dto";
+import { PomodoroRoundDto, PomodoroSessionDto } from './dto/pomodoroRound.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('users/pomodoro-timer')
+@ApiBearerAuth()
+@ApiTags('Pomodoro Timer')
 export class PomodoroTimerController {
   constructor(private readonly pomodoroTimerService: PomodoroTimerService) {}
 
