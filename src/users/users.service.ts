@@ -1,8 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { DbService } from '../db/db.service';
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
 import { startOfDay, subDays } from 'date-fns';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
@@ -36,8 +37,6 @@ export class UserService {
       },
     });
 
-    if (!user) throw new NotFoundException('User not found');
-
     return user;
   }
 
@@ -53,8 +52,6 @@ export class UserService {
         comment: true,
       },
     });
-
-    if (!user) throw new NotFoundException('User not found');
 
     return user;
   }
@@ -80,7 +77,7 @@ export class UserService {
     const profile = await this.findUserById(userId);
 
     const totalTasks = profile.task.length;
-    const completedTasks = this.dbService.task.count({
+    const completedTasks = await this.dbService.task.count({
       where: {
         userId,
         isCompleted: true,

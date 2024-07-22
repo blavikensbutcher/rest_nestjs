@@ -31,9 +31,10 @@ export class UserDto extends PomodoroSettingsDto {
   email?: string;
 
   @IsString()
-  @MinLength(3, { message: 'Password must be longer than 3 symbols' })
   name?: string;
 
   @IsString()
+  @MinLength(3, { message: 'Password must be longer than 3 symbols' })
+  @IsOptional()
   password?: string;
 }

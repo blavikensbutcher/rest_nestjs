@@ -7,17 +7,6 @@ export class TimeBlocksService {
   constructor(private readonly dbService: DbService) {}
 
   async getAll(userId: string) {
-    // const args: Prisma.TimeBlockFindManyArgs = {
-    //   where: {
-    //     userId: userId,
-    //   },
-    //   orderBy: {
-    //     order: 'asc',
-    //   },
-    // };
-    //
-    // return this.dbService.timeBlock.findMany(args);
-
     return this.dbService.timeBlock.findMany({
       where: {
         userId,
