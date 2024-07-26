@@ -22,10 +22,9 @@ export class TaskDto {
   @ApiProperty()
   createdAt?: string;
 
-  @ApiProperty({ enum: ['LOW', 'MEDIUM', 'HIGH'] })
+  @ApiProperty({ enum: Priority })
   @IsEnum(Priority)
   @IsOptional()
-  @Transform(({ value }) => ('' + value).toLowerCase())
-  @ApiProperty()
+  @Transform(({ value }) => ('' + value).toUpperCase())
   priority?: Priority;
 }

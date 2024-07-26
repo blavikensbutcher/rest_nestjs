@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { TaskDto } from './dto/task.dto';
 import { DbService } from '../db/db.service';
+import { Priority } from '@prisma/client';
 
 @Injectable()
 export class TasksService {
@@ -33,7 +34,10 @@ export class TasksService {
         id: taskId,
         userId: userId,
       },
-      data: dto,
+      data: {
+        ...dto,
+        priority: Priority[dto.priority.toUpperCase() as keyof typeof Priority],
+      },
     });
   }
 
