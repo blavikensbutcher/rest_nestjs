@@ -7,9 +7,9 @@ import * as process from 'process';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: false });
   app.enableCors({
-    origin: true,
+    origin: 'http://localhost:8080',
     credentials: true,
-    exposedHeaders: 'set-cookie',
+    exposedHeaders: ['set-cookie'],
     // origin: 'http://localhost:3000',
   });
   app.setGlobalPrefix('api');

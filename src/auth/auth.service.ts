@@ -77,9 +77,8 @@ export class AuthService {
     );
 
     res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
-      // httpOnly: true,
-      httpOnly: false,
-      domain: 'localhost',
+      httpOnly: true,
+      // domain: 'localhost',
       expires: expiresIn,
       secure: false,
       // lax in prod
