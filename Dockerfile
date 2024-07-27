@@ -10,6 +10,8 @@ COPY . .
 
 EXPOSE 3000
 
+RUN npx prisma db push
+
 RUN npx prisma generate
 
 
