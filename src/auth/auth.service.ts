@@ -18,7 +18,7 @@ export class AuthService {
     private userService: UserService,
   ) {}
 
-  REFRESH_TOKEN_NAME = process.env.REFRESH_TOKEN_NAME;
+  REFRESH_TOKEN_NAME = process.env.REFRESH_TOKEN_NAME || 'refreshToken';
 
   async login(dto: AuthDto) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
