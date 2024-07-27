@@ -34,10 +34,7 @@ export class TasksService {
         id: taskId,
         userId: userId,
       },
-      data: {
-        ...dto,
-        priority: Priority[dto.priority.toUpperCase() as keyof typeof Priority],
-      },
+      data: dto,
     });
   }
 
