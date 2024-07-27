@@ -79,7 +79,7 @@ export class AuthService {
     res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
       // httpOnly: true,
       httpOnly: false,
-      // domain: 'localhost',
+      domain: 'localhost',
       expires: expiresIn,
       secure: false,
       // lax in prod
@@ -91,7 +91,7 @@ export class AuthService {
     res.cookie(this.REFRESH_TOKEN_NAME, '', {
       // httpOnly: true,
       httpOnly: false,
-      // domain: 'localhost',
+      domain: 'localhost',
       expires: new Date(0),
       secure: false,
       // lax in prod
