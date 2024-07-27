@@ -14,6 +14,6 @@ EXPOSE 3000
 
 RUN npx prisma generate
 
-RUN npx prisma migrate dev
+RUN npx prisma db push
 
 CMD ["npm", "run", "start:dev"]
