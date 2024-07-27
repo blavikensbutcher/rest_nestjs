@@ -78,11 +78,10 @@ export class AuthService {
 
     res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
       httpOnly: true,
-      // domain: 'localhost',
+      domain: 'localhost',
       expires: expiresIn,
-      secure: false,
-      // lax in prod
-      sameSite: 'none',
+      secure: true,
+      sameSite: 'lax',
     });
   }
 
