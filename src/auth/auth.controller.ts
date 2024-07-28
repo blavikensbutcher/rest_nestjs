@@ -71,6 +71,9 @@ export class AuthController {
 
     this.authService.addRefreshToken(res, response.refreshToken);
 
-    return response;
+    return {
+      accessToken: response.accessToken,
+      refreshToken: response.refreshToken,
+    };
   }
 }
