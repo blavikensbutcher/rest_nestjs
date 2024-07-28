@@ -7,7 +7,7 @@ import * as process from 'process';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: false });
   app.enableCors({
-    origin: 'localhost',
+    origin: 'https://taskmanager-frontend-omega.vercel.app',
     credentials: true,
     exposedHeaders: ['set-cookie'],
     // origin: 'http://localhost:3000',

@@ -78,7 +78,7 @@ export class AuthService {
 
     res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
       httpOnly: true,
-      domain: 'localhost',
+      domain: 'taskmanager-frontend-omega.vercel.app',
       expires: expiresIn,
       secure: true,
       sameSite: 'lax',
@@ -88,10 +88,9 @@ export class AuthService {
   removeRefreshToken(res: Response) {
     res.cookie(this.REFRESH_TOKEN_NAME, '', {
       httpOnly: true,
-      domain: 'localhost',
+      domain: 'taskmanager-frontend-omega.vercel.app',
       expires: new Date(0),
       secure: true,
-      // lax in prod
       sameSite: 'lax',
     });
   }
