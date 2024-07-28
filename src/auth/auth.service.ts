@@ -23,6 +23,9 @@ export class AuthService {
   async login(dto: AuthDto) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...user } = await this.validateUser(dto);
+
+    if (!user.email) throw new NotFoundException('Email or password is wrong');
+
     const tokens = this.issueTokens(user.id);
 
     await this.userService.updateUser(user.id, {
