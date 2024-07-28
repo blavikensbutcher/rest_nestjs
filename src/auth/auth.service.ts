@@ -78,7 +78,6 @@ export class AuthService {
 
     res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
       httpOnly: true,
-      domain: '.vercel.app',
       expires: expiresIn,
       secure: true,
       sameSite: 'lax',
@@ -88,7 +87,6 @@ export class AuthService {
   removeRefreshToken(res: Response) {
     res.cookie(this.REFRESH_TOKEN_NAME, '', {
       httpOnly: true,
-      domain: '.vercel.app',
       expires: new Date(0),
       secure: true,
       sameSite: 'lax',
