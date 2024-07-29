@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { TaskDto } from './dto/task.dto';
 import { DbService } from '../db/db.service';
 
@@ -18,8 +22,11 @@ export class TasksService {
     const taskList = await this.getTaskByUserIdAndText(dto.text, userId);
 
     for (let i = 0; i < taskList.length - 1; i++) {
-      if (taskList[i].text === taskList[i + 1].text) {
-        throw new BadRequestException('Task on this time already exists');
+      if (
+        taskList[i].text === dto.text &&
+        taskList[i].createdAt.toString() === dto.createdAt.toString()
+      ) {
+        throw new ConflictException('This task already exists');
       }
     }
 
