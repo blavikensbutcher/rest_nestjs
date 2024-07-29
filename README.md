@@ -1,73 +1,74 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Pomodoro Task Manager
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Цей додаток допомогає користувачам правильно менеджети свій час, працювати з Pomodoro таймером та розставляти собі задачі на день/тиждень/місяць
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- [Жива сторінка](https://taskmanager-frontend-omega.vercel.app/)
+- [Фронтенд](https://github.com/blavikensbutcher/taskmanager_frontend)
+- [Бекенд](https://github.com/blavikensbutcher?tab=repositories)
 
-## Description
+#### Ключові особливості:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+1. Pomodoro Timer. Цей метод використовує таймер для того, щоб розбити роботу на інтервали, які називаються «pomodori» (італійське слово, що означає «помідори») які розділені короткими перервами. (50 хвилин роботи / 10 відпочінку за замовчуванням)
 
-## Installation
+2. Time blocking. Це спосіб розставити собі плани на день і виділити їм стільки часу, скільки потрібно.
 
-```bash
-$ npm install
-```
+3. Tasks. Класичний задачник, де можна додати свої плани на сьогодні, на неділю, наступну неділю чи місяць. Їх можна зручно переміщувати між інтервалами часу і час зміниться самостійно, також можна виставити приорітет наскільки ця задача важлива. Тут є два види списка перелік так Kanban дошка.
 
-## Running the app
+## Технології, які використовувалися для створення додатка
 
-```bash
-# development
-$ npm run start
+### TanStack Query <img src="https://tanstack.com/_build/assets/logo-color-100w-lPbOTx1K.png" width=30>
 
-# watch mode
-$ npm run start:dev
+- це бібліотека для управління асинхронними запитами в React-додатках. Вона забезпечує кешування, синхронізацію стану, фонове оновлення та багато інших функцій для зручного керування даними.
 
-# production mode
-$ npm run start:prod
-```
+### Nest.js <img src="https://nestjs.com/logo-small-gradient.76616405.svg" width=30>
 
-## Test
+- це прогресивний фреймворк для Node.js, який використовує TypeScript і забезпечує модульну архітектуру для розробки серверних додатків. Nest.js базується на концепціях та шаблонах, які використовуються в Angular.
 
-```bash
-# unit tests
-$ npm run test
+### Next.js <img src="https://static-00.iconduck.com/assets.00/next-js-icon-512x512-zuauazrk.png" width=30>
 
-# e2e tests
-$ npm run test:e2e
+- Фреймворк для React, який дозволяє створювати серверні та клієнтські рендеринг-додатки з мінімальною конфігурацією. Він підтримує статичну генерацію сайтів, серверний рендеринг, API-роути та багато іншого.
 
-# test coverage
-$ npm run test:cov
-```
+### Axios <img src="https://logowik.com/content/uploads/images/axios5736.logowik.com.webp" width=30>
 
-## Support
+- популярна бібліотека для виконання HTTP-запитів у браузері та Node.js. Вона забезпечує простий API для роботи з запитами та обробкою відповідей, підтримує перехоплення запитів/відповідей і автоматично обробляє JSON-дані.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Cookie Parser <img src="https://cdn-icons-png.flaticon.com/512/1689/1689340.png" width=30>
 
-## Stay in touch
+- Middleware для Node.js, який дозволяє парсити cookies, отримані з HTTP-запитів. Він допомагає легко працювати з куками у ваших додатках, забезпечуючи зручний доступ до їх значень.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Lodash <img src="https://static-00.iconduck.com/assets.00/lodash-icon-2048x1864-lr0l3sao.png" width=30>
 
-## License
+- це потужна бібліотека для JavaScript, яка надає безліч корисних функцій для роботи з масивами, об'єктами, рядками тощо. Вона допомагає скоротити код і підвищити його читабельність, надаючи зручні методи для виконання поширених операцій.
 
-Nest is [MIT licensed](LICENSE).
+### Tailwind <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" width=30>
+
+- Утилітарно-орієнтована CSS фреймворк, яка дозволяє швидко створювати адаптивні та стильні інтерфейси без написання користувацького CSS. Вона надає набір класів, які можна комбінувати для створення складних компонентів прямо в HTML.
+
+## Документація доступна за посиланням
+
+ <img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*C_u3RtbZnYzRI10IUWbPfg.png" width=100>
+
+[Docs](https://rest-nestjs.onrender.com/docs)
+
+## Docker compose
+
+`docker-compose run --build` - to run docker container
+
+## The scripts from package.json
+
+`npm run start:dev` - to run server using nodemon
+
+## The structure of the template
+
+**.env.example** - the example of the `.env` file that contains global variables of the service. `.env.example` should be without production data. Should be in GIT;
+
+**.env** - the copied file of `.env.example` && `.env.local.example` with real data of variables. Should be excluded from GIT;
+
+**.gitignore** - patterns of files or folders to ignore checking git changes;
+
+**main.ts** - the file to start the service.
+
+**package.json** - the main file of information, and configuration, and dependencies of the service;
+
+**package-lock.json** - the file from `package.json` that contains all information about all node modules that were installed like dependencies and
+devDependencies;
