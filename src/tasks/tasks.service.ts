@@ -18,10 +18,7 @@ export class TasksService {
     const taskList = await this.getTaskByUserIdAndText(dto.text, userId);
 
     for (let i = 0; i < taskList.length - 1; i++) {
-      if (
-        taskList[i].createdAt === taskList[i + 1].createdAt &&
-        taskList[i].text === taskList[i + 1].text
-      ) {
+      if (taskList[i].text === taskList[i + 1].text) {
         throw new BadRequestException('Task on this time already exists');
       }
     }
