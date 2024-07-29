@@ -1,7 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { TaskDto } from './dto/task.dto';
 import { DbService } from '../db/db.service';
-import { Priority } from '@prisma/client';
 
 @Injectable()
 export class TasksService {
@@ -16,6 +15,17 @@ export class TasksService {
   }
 
   async createTask(dto: TaskDto, userId: string) {
+    const taskList = await this.getTaskByUserIdAndText(dto.text, userId);
+
+    for (let i = 0; i < taskList.length - 1; i++) {
+      if (
+        taskList[i].createdAt === taskList[i + 1].createdAt &&
+        taskList[i].text === taskList[i + 1].text
+      ) {
+        throw new BadRequestException('Task on this time already exists');
+      }
+    }
+
     return this.dbService.task.create({
       data: {
         ...dto,
@@ -35,6 +45,15 @@ export class TasksService {
         userId: userId,
       },
       data: dto,
+    });
+  }
+
+  async getTaskByUserIdAndText(text: string, userId: string) {
+    return this.dbService.task.findMany({
+      where: {
+        userId,
+        text,
+      },
     });
   }
 

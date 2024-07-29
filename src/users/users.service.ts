@@ -1,9 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { DbService } from '../db/db.service';
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
 import { startOfDay, subDays } from 'date-fns';
-import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
