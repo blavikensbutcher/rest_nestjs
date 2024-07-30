@@ -62,7 +62,7 @@
 
 **.env.example** - the example of the `.env` file that contains global variables of the service. `.env.example` should be without production data. Should be in GIT;
 
-**.env** - the copied file of `.env.example` && `.env.local.exampler` with real data of variables. Should be excluded from GIT;
+**.env** - the copied file of `.env.example` && `.env.local.example` with real data of variables. Should be excluded from GIT;
 
 **.gitignore** - patterns of files or folders to ignore checking git changes;
 
